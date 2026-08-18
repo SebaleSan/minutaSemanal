@@ -27,6 +27,7 @@ import androidx.compose.ui.modifier.modifierLocalOf
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.minutanutricional.ui.login.LoginScreen
 import com.example.minutanutricional.ui.theme.MinutaTheme
 
 class MainActivity : ComponentActivity() {
@@ -35,7 +36,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             MinutaTheme {
-                MyCompo()
+                LoginScreen()
 
 
             }
@@ -44,37 +45,14 @@ class MainActivity : ComponentActivity() {
 }
 
 
-@Composable
-fun MyCompo(){
-    Row(modifier = Modifier.padding(8.dp)) {
-        MyImg()
-        Bienvenida()
 
-    }
-}
-@Composable
-fun Bienvenida(){
-    Column(modifier = Modifier.padding(start = 8.dp)) {
-        Text(text = "Bienvenida")
-        Spacer(modifier = Modifier.height(2.dp))
-        Text(text="prueba texto 1")
-    }
-}
-
-@Composable
-fun MyImg(){
-    Image(
-        painterResource(R.drawable.ic_launcher_foreground),
-        contentDescription = "Imagen de prueba",
-        modifier = Modifier.background(Color.Blue).clip(CircleShape).size(42.dp)
-    )
-}
 
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
     MinutaTheme {
-        MyCompo()
+        LoginScreen()
+
 
     }
 }
