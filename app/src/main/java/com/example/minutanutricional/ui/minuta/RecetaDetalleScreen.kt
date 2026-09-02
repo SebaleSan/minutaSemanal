@@ -97,6 +97,7 @@ fun RecetaDetalleScreen(
 fun RecetaDetalleScreenPreview() {
     RecetaDetalleScreen(
         receta = Receta(
+            id = 1,
             dia = "Lunes",
             nombre = "Ensalada de quinoa",
             recomendacion = "Rica en proteínas",

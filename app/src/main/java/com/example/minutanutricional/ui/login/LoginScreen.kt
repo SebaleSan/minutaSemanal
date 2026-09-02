@@ -20,8 +20,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
+
 @Composable
-fun LoginScreen(){
+fun LoginScreen(
+    onLoginExitoso: () -> Unit,
+    onIrARegistro: () -> Unit,
+    onIrARecuperar: () -> Unit
+){
     var correo by remember { mutableStateOf("") }
     var contrasena by remember { mutableStateOf("") }
 
@@ -59,11 +64,9 @@ fun LoginScreen(){
                 .padding(bottom = 16.dp)
         )
 
-        Button(onClick = {}) {Text("Ingresar") }
-        TextButton(onClick = {}) {Text("¿Olvidaste tu contraseña?") }
-        TextButton(onClick = {}) {Text("¿No tienes cuenta? Regístrate") }
-
-
+        Button(onClick = { onLoginExitoso() }) { Text("Ingresar") }
+        TextButton(onClick = { onIrARecuperar() }) { Text("¿Olvidaste tu contraseña?") }
+        TextButton(onClick = { onIrARegistro() }) { Text("¿No tienes cuenta? Regístrate") }
 
     }
 }
@@ -71,7 +74,10 @@ fun LoginScreen(){
 
 @Preview(showBackground = true)
 @Composable
-fun LoginPreview() {
-    LoginScreen()
-
+fun LoginScreenPreview() {
+    LoginScreen(
+        onLoginExitoso = { },
+        onIrARegistro = { },
+        onIrARecuperar = { }
+    )
 }

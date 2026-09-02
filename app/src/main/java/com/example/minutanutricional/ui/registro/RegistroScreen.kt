@@ -28,7 +28,10 @@ import androidx.compose.ui.unit.dp
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RegistroScreen() {
+fun RegistroScreen(
+    onRegistroExitoso: () -> Unit
+
+) {
     var nombre by remember { mutableStateOf("") }
     var correo by remember { mutableStateOf("") }
     var contrasena by remember { mutableStateOf("") }
@@ -135,7 +138,7 @@ fun RegistroScreen() {
         }
 
         Button(
-            onClick = { },
+            onClick = { onRegistroExitoso() },
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(top = 24.dp)
@@ -156,11 +159,10 @@ fun RegistroScreen() {
 @Preview(showBackground = true)
 @Composable
 fun RegistroPreview() {
-    RegistroScreen()
-
-
+    RegistroScreen(
+        onRegistroExitoso = { }
+    )
 }
-
 
 
 
