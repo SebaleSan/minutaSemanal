@@ -1,6 +1,8 @@
 package com.example.minutanutricional.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -9,7 +11,7 @@ import com.example.minutanutricional.ui.minuta.MinutaScreen
 import com.example.minutanutricional.ui.minuta.RecetaDetalleScreen
 import com.example.minutanutricional.ui.registro.RegistroScreen
 import androidx.navigation.toRoute
-import com.example.minutanutricional.data.listaRecetas
+import com.example.minutanutricional.data.obtenerRecetas
 import com.example.minutanutricional.ui.recuperar.RecuperarScreen
 
 @Composable
@@ -42,12 +44,15 @@ fun NavGraph() {
 
         composable<DetalleReceta> { backStackEntry ->
             val datos: DetalleReceta = backStackEntry.toRoute()
-            val receta = listaRecetas.first { it.id == datos.id }
+            val recetas by obtenerRecetas().collectAsState(initial = emptyList())
+            val receta = recetas.firstOrNull { it.id == datos.id }
 
-            RecetaDetalleScreen(
-                receta = receta,
-                onAtrasClick = { navController.popBackStack() }
-            )
+            if (receta != null) {
+                RecetaDetalleScreen(
+                    receta = receta,
+                    onAtrasClick = { navController.popBackStack() }
+                )
+            }
         }
 
         composable<Recuperar> {

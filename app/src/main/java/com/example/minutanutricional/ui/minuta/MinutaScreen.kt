@@ -15,13 +15,11 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.ui.unit.dp
 import com.example.minutanutricional.data.Receta
-import com.example.minutanutricional.data.listaRecetas
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.material3.Button
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import com.example.minutanutricional.data.obtenerRecetas
+
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -29,6 +27,8 @@ import androidx.compose.ui.graphics.RectangleShape
 fun MinutaScreen(
     onRecetaClick: (Receta) -> Unit
 ) {
+    val recetas by obtenerRecetas().collectAsState(initial = emptyList())
+
     Scaffold(
         topBar = {
             TopAppBar(
@@ -42,44 +42,16 @@ fun MinutaScreen(
                 .padding(paddingInterno)
                 .padding(16.dp)
         ) {
-            items(listaRecetas) { receta ->
+            items(recetas) { receta ->
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(bottom = 16.dp)
+                        .padding(bottom = 12.dp)
                         .clickable { onRecetaClick(receta) }
                 ) {
-                    Row(
-                        modifier = Modifier
-                            .padding(16.dp)
-                            .fillMaxWidth(),
-                            verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Column(
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            Text(
-                                text = receta.dia,
-                                style = MaterialTheme.typography.labelLarge
-                            )
-                            Text(
-                                text = receta.nombre,
-                                style = MaterialTheme.typography.titleMedium
-                            )
-                            Text(
-                                text = receta.recomendacion,
-                                style = MaterialTheme.typography.bodySmall
-                            )
-                        }
-                        Button(
-                            onClick = {onRecetaClick(receta)}
-                        ) {
-                            Text("Ver")
-                        }
-
-
-
-                    }
+                    Text(text = receta.dia, style = MaterialTheme.typography.labelLarge)
+                    Text(text = receta.nombre, style = MaterialTheme.typography.titleMedium)
+                    Text(text = receta.recomendacion, style = MaterialTheme.typography.bodySmall)
                 }
             }
         }
