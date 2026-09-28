@@ -17,3 +17,6 @@ object Minuta
 
 @Serializable
 data class DetalleReceta(val id: Int)
+
+@Serializable
+object Perfil

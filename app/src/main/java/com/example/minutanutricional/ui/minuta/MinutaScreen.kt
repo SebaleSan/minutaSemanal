@@ -16,6 +16,10 @@ import androidx.compose.material3.Card
 import androidx.compose.ui.unit.dp
 import com.example.minutanutricional.data.Receta
 import androidx.compose.foundation.clickable
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.example.minutanutricional.data.obtenerRecetas
@@ -25,14 +29,23 @@ import com.example.minutanutricional.data.obtenerRecetas
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MinutaScreen(
-    onRecetaClick: (Receta) -> Unit
+    onRecetaClick: (Receta) -> Unit,
+    onPerfilClick: () -> Unit
 ) {
     val recetas by obtenerRecetas().collectAsState(initial = emptyList())
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Minuta Semanal") }
+                title = { Text("Minuta Semanal") },
+                actions = {
+                    IconButton(onClick = onPerfilClick) {
+                        Icon(
+                            imageVector = Icons.Filled.Person,
+                            contentDescription = "Mi perfil"
+                        )
+                    }
+                }
             )
         }
     ) { paddingInterno ->
@@ -56,12 +69,4 @@ fun MinutaScreen(
             }
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun MinutaPreview() {
-    MinutaScreen(
-        onRecetaClick = { }
-    )
 }

@@ -12,6 +12,7 @@ import com.example.minutanutricional.ui.minuta.RecetaDetalleScreen
 import com.example.minutanutricional.ui.registro.RegistroScreen
 import androidx.navigation.toRoute
 import com.example.minutanutricional.data.obtenerRecetas
+import com.example.minutanutricional.ui.perfil.PerfilScreen
 import com.example.minutanutricional.ui.recuperar.RecuperarScreen
 
 @Composable
@@ -38,9 +39,12 @@ fun NavGraph() {
 
         composable<Minuta> {
             MinutaScreen(
-                onRecetaClick = { receta -> navController.navigate(DetalleReceta(receta.id)) }
+                onRecetaClick = { receta -> navController.navigate(DetalleReceta(receta.id)) },
+                onPerfilClick = { navController.navigate(Perfil) }
             )
         }
+
+
 
         composable<DetalleReceta> { backStackEntry ->
             val datos: DetalleReceta = backStackEntry.toRoute()
@@ -55,10 +59,23 @@ fun NavGraph() {
             }
         }
 
+
+
         composable<Recuperar> {
             RecuperarScreen(
                 onEnviarClick = { navController.popBackStack() },
                 onVolverClick = { navController.popBackStack() }
+            )
+        }
+
+        composable<Perfil> {
+            PerfilScreen(
+                onAtrasClick = { navController.popBackStack() },
+                onCuentaEliminada = {
+                    navController.navigate(Login) {
+                        popUpTo(0) // borra todos los destinos de la pila para que el usuario no pueda volver atras
+                    }
+                }
             )
         }
     }
