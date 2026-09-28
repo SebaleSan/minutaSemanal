@@ -99,6 +99,10 @@ fun LoginScreen(
         TextButton(onClick = { onIrARecuperar() }) { Text("¿Olvidaste tu contraseña?") }
         TextButton(onClick = { onIrARegistro() }) { Text("¿No tienes cuenta? Regístrate") }
 
+        Text(text = "Datos de acceso usuario prueba, autenticado mediante FireBase\n" +
+                "Correo: prueba1@gmail.com\n" +"" +
+                "Contraseña: Clave1234")
+
     }
 }
 
