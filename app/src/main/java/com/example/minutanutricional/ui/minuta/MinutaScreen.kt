@@ -1,5 +1,6 @@
 package com.example.minutanutricional.ui.minuta
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -23,7 +24,21 @@ import androidx.compose.material3.IconButton
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import com.example.minutanutricional.data.obtenerRecetas
-
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.CardDefaults
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import coil.compose.AsyncImage
+import com.example.minutanutricional.ui.util.cargarBitmapDesdeUrl
+import com.example.minutanutricional.ui.util.extraerColorVibrante
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -56,15 +71,38 @@ fun MinutaScreen(
                 .padding(16.dp)
         ) {
             items(recetas) { receta ->
+                var colorTarjeta by remember { mutableStateOf(Color.LightGray) }
+                val context = LocalContext.current
+
+                LaunchedEffect(receta.imagenUrl) {
+                    val bitmap = cargarBitmapDesdeUrl(context, receta.imagenUrl)
+                    if (bitmap != null) {
+                        colorTarjeta = extraerColorVibrante(bitmap, Color.LightGray)
+                    }
+                }
+
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(bottom = 12.dp)
-                        .clickable { onRecetaClick(receta) }
+                        .clickable { onRecetaClick(receta) },
+                    colors = CardDefaults.cardColors(containerColor = colorTarjeta)
                 ) {
-                    Text(text = receta.dia, style = MaterialTheme.typography.labelLarge)
-                    Text(text = receta.nombre, style = MaterialTheme.typography.titleMedium)
-                    Text(text = receta.recomendacion, style = MaterialTheme.typography.bodySmall)
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        AsyncImage(
+                            model = receta.imagenUrl,
+                            contentDescription = receta.nombre,
+                            modifier = Modifier
+                                .size(64.dp)
+                                .padding(8.dp),
+                            contentScale = ContentScale.Crop
+                        )
+                        Column(modifier = Modifier.padding(16.dp)) {
+                            Text(text = receta.dia, style = MaterialTheme.typography.labelLarge)
+                            Text(text = receta.nombre, style = MaterialTheme.typography.titleMedium)
+                            Text(text = receta.recomendacion, style = MaterialTheme.typography.bodySmall)
+                        }
+                    }
                 }
             }
         }

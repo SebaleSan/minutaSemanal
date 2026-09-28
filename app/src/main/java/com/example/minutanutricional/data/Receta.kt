@@ -9,5 +9,6 @@ data class Receta(
     val nombre: String = "",
     val recomendacion: String = "",
     val ingredientes: List<String> = emptyList(),
-    val instrucciones: String = ""
+    val instrucciones: String = "",
+    val imagenUrl: String = ""
 )
